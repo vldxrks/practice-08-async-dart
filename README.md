@@ -51,17 +51,16 @@ flutter pub get
 | Затримка сповіщень на 10 секунд | `lib/main.dart` → `_lastAlert` |
 | Моделі в окремих файлах | `lib/models/*.dart` |
 
-## Сценарій демонстрації
-
-1. Встановити 0 % → оновити → показати три картки, підсумок і нові значення кожні 1,5 с.
-2. Дочекатися виходу одного значення за поріг → кольорове виділення + `SnackBar` не частіше ніж раз на 10 секунд для цього датчика.
-3. Натиснути **Пауза** → чекати 5 с: показання не змінюються. **Продовжити** → показання знову рухаються.
-4. 50 % → показати помилку окремого датчика, тоді як інші продовжують оновлюватися.
-5. 100 % → показати екран помилки і кнопку **Повторити**; 0 % → повторити успішно.
-6. 0 % + «Порожні дані (демо)» → показати порожній стан.
-7. Закрити екран під час оновлення → ресурси звільняються, не має бути необроблених винятків.
-
 ## Скриншоти
-<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/1e2813a0-69a3-445b-a1ac-52d3b96dafa0" />
-<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/ae871ce3-c094-42f9-ba14-037b7d9edbf7" />
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/265eddc1-8c45-4b1b-ad57-6b0b40272ef0" />
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/f7b2df3d-0624-4dbe-b406-576a4809bbd4" />
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/d0b499e3-532e-43e2-a656-36f64798cc33" />
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/b37ecf86-6485-4f72-9a64-aaa726161314" />
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/8783dacb-c7e8-4af1-82d1-9237166c1130" />
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/2db38bf4-72ce-4a2a-9113-a97236f221e2" />
+
+
+
+
+
 
