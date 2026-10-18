@@ -1,0 +1,88 @@
+# Практична робота №8 — Робота з асинхронним кодом у Dart
+
+**Дисципліна:** Програмування для мобільних платформ  
+**Варіант 1:** Моніторинг розумної теплиці  
+**Мета:** `Future`, `Stream`, паралельні запити, тайм-аути, обробка помилок та коректне звільнення ресурсів.
+
+## Функціональність
+
+- Три датчики: температура (18–30 °C), вологість (40–75 %), освітленість (200–800 лк).
+- Одне завантаження **списку датчиків, порогів, добового підсумку**: `Future.wait`, загальний індикатор, тайм-аут 3 с.
+- Оновлення кожні **1,5 с** за допомогою `Timer.periodic` та `StreamController.broadcast()`.
+- Кожен датчик показує вимір або власну помилку; невдалий запит надсилається через `addError`, а потік продовжує роботу.
+- Вихід показника за поріг підсвічує картку; `SnackBar` для датчика обмежено одним повідомленням за 10 с.
+- «Пауза / Продовжити» фізично вимикає / вмикає таймер джерела, а не приховує віджети.
+- Стани: завантаження, помилка + «Повторити», порожньо + «Повторити», дані та живе оновлення.
+- Селектор збоїв (0 %, 20 %, 50 %, 100 %) і демо-перемикач порожніх даних для захисту.
+
+## Запуск
+
+Потрібно встановити **Flutter SDK** (версія з Dart >= 3.3), Android Studio або Chrome; налаштувати `flutter doctor`.
+
+```bash
+flutter pub get
+flutter run -d chrome
+# Або: flutter run -d <id-вашого-Android-пристрою>
+flutter run -d chrome
+flutter test
+```
+
+У проєкті є `lib/`, `test/`, базові Flutter Android- та Web-файли. Якщо ваша версія Flutter вимагає оновлення платформних шаблонів або відсутнього Gradle wrapper JAR, **перед запуском** виконайте в корені проєкту:
+
+```bash
+flutter create --platforms=android,web --project-name=greenhouse_async .
+flutter pub get
+```
+
+Це збереже авторський код `lib/` і тести `test/`. Жодних додаткових мережевих пакетів немає — сервіс імітує API локально.
+
+## Де виконані технічні вимоги
+
+| Вимога | Файл, реалізація |
+| --- | --- |
+| `Future.wait` + `.timeout(3 с)` | `lib/services/greenhouse_service.dart` → `fetchInitialData()` |
+| Імітація мережі, конфігуровані збої | `lib/services/fake_api.dart` → `request()` |
+| `FutureBuilder`, Future не в `build()` | `lib/main.dart` → `_initialFuture`, `_load()`, `FutureBuilder` |
+| Власний `StreamController`, `addError` | `lib/services/sensor_monitor.dart` → `_controller`, `_read()` |
+| `StreamBuilder`, незалежні помилки датчиків | `lib/widgets/sensor_card.dart` і `SensorMonitor.eventsFor()` |
+| Пауза справді зупиняє джерело | `SensorMonitor.stop()` скасовує `Timer.periodic` |
+| `dispose()` | `lib/main.dart` → скасування підписок; `sensor_monitor.dart` → таймер + `close()` |
+| `mounted` після `await` | `lib/main.dart` → `_load()` |
+| Затримка сповіщень на 10 секунд | `lib/main.dart` → `_lastAlert` |
+| Моделі в окремих файлах | `lib/models/*.dart` |
+
+## Сценарій демонстрації
+
+1. Встановити 0 % → оновити → показати три картки, підсумок і нові значення кожні 1,5 с.
+2. Дочекатися виходу одного значення за поріг → кольорове виділення + `SnackBar` не частіше ніж раз на 10 секунд для цього датчика.
+3. Натиснути **Пауза** → чекати 5 с: показання не змінюються. **Продовжити** → показання знову рухаються.
+4. 50 % → показати помилку окремого датчика, тоді як інші продовжують оновлюватися.
+5. 100 % → показати екран помилки і кнопку **Повторити**; 0 % → повторити успішно.
+6. 0 % + «Порожні дані (демо)» → показати порожній стан.
+7. Закрити екран під час оновлення → ресурси звільняються, не має бути необроблених винятків.
+
+## Скриншоти
+
+Перелік потрібних реальних скриншотів і точна процедура є в [`docs/README.md`](docs/README.md).
+
+**Важливо:** у середовищі підготовки архіву немає Flutter SDK, тому `flutter analyze`, збірка та тести тут не запускалися. Скриншоти запуску не сфабриковані. Перевірте проєкт локально перед здачею.
+
+## Як здати
+
+За умовою здається **лише посилання на GitHub-репозиторій**: повний проєкт, `.gitignore`, `README.md`, `docs/` зі скриншотами та **щонайменше 4 осмислені коміти**. Готовий ZIP — матеріал для створення репозиторію, а не заміна GitHub-посилання.
+
+Рекомендовані 4 коміти:
+
+```bash
+git init
+git add pubspec.yaml analysis_options.yaml .gitignore android web
+git commit -m "chore: initialize Flutter project"
+git add lib/models lib/services
+git commit -m "feat: implement async API and sensor streams"
+git add lib/main.dart lib/widgets
+git commit -m "feat: add greenhouse dashboard and state handling"
+git add README.md docs test
+git commit -m "test: add checks and usage documentation"
+```
+
+Створіть порожній репозиторій GitHub, потім додайте `remote` та `git push -u origin main` (за потреби перейменуйте гілку `git branch -M main`).

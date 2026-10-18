@@ -1,0 +1,7 @@
+{
+  "name": "Розумна теплиця", "short_name": "Теплиця",
+  "start_url": ".", "display": "standalone",
+  "background_color": "#f4f8f5", "theme_color": "#008577",
+  "description": "Навчальний Flutter застосунок з Future та Stream",
+  "orientation": "portrait-primary", "prefer_related_applications": false
+}
