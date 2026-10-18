@@ -62,3 +62,6 @@ flutter pub get
 7. Закрити екран під час оновлення → ресурси звільняються, не має бути необроблених винятків.
 
 ## Скриншоти
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/1e2813a0-69a3-445b-a1ac-52d3b96dafa0" />
+<img width="1680" height="1050" alt="image" src="https://github.com/user-attachments/assets/ae871ce3-c094-42f9-ba14-037b7d9edbf7" />
+
