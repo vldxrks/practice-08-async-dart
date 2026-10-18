@@ -62,27 +62,3 @@ flutter pub get
 7. Закрити екран під час оновлення → ресурси звільняються, не має бути необроблених винятків.
 
 ## Скриншоти
-
-Перелік потрібних реальних скриншотів і точна процедура є в [`docs/README.md`](docs/README.md).
-
-**Важливо:** у середовищі підготовки архіву немає Flutter SDK, тому `flutter analyze`, збірка та тести тут не запускалися. Скриншоти запуску не сфабриковані. Перевірте проєкт локально перед здачею.
-
-## Як здати
-
-За умовою здається **лише посилання на GitHub-репозиторій**: повний проєкт, `.gitignore`, `README.md`, `docs/` зі скриншотами та **щонайменше 4 осмислені коміти**. Готовий ZIP — матеріал для створення репозиторію, а не заміна GitHub-посилання.
-
-Рекомендовані 4 коміти:
-
-```bash
-git init
-git add pubspec.yaml analysis_options.yaml .gitignore android web
-git commit -m "chore: initialize Flutter project"
-git add lib/models lib/services
-git commit -m "feat: implement async API and sensor streams"
-git add lib/main.dart lib/widgets
-git commit -m "feat: add greenhouse dashboard and state handling"
-git add README.md docs test
-git commit -m "test: add checks and usage documentation"
-```
-
-Створіть порожній репозиторій GitHub, потім додайте `remote` та `git push -u origin main` (за потреби перейменуйте гілку `git branch -M main`).
